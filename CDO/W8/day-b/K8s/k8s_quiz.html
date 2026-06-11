@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Kubernetes Master Quiz | xBrain</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, #051937 0%, #004d7a 50%, #008793 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      text-align: center;
+      margin-bottom: 4px;
+      background: linear-gradient(90deg, #326ce5, #00b4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .subtitle {
+      color: #b3d4ff;
+      font-size: .87rem;
+      text-align: center;
+      margin-bottom: 14px
+    }
+
+    .container {
+      width: 100%;
+      max-width: 820px
+    }
+
+    .tab-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      background: #ffffff08;
+      border: 1px solid #ffffff15;
+      border-radius: 16px;
+      padding: 6px
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px 12px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: .87rem;
+      font-weight: 600;
+      transition: .25s;
+      color: #b3d4ff;
+      background: transparent
+    }
+
+    .tab-btn.active {
+      color: #fff
+    }
+
+    .tab-btn.t-theory.active {
+      background: linear-gradient(90deg, #326ce5, #00b4ff)
+    }
+
+    .tab-btn.t-practice.active {
+      background: linear-gradient(90deg, #00d088, #34d399);
+      color: #1a1a2e
+    }
+
+    .tab-btn:not(.active):hover {
+      background: #ffffff15;
+      color: #fff
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 18px
+    }
+
+    .tag {
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: .74rem;
+      font-weight: 600;
+      border: 1px solid
+    }
+
+    .tg1 {
+      border-color: #00b4ff;
+      color: #00b4ff
+    }
+
+    .tg2 {
+      border-color: #00d9ff;
+      color: #00d9ff
+    }
+
+    .tg3 {
+      border-color: #34d399;
+      color: #34d399
+    }
+
+    .tg4 {
+      border-color: #a78bfa;
+      color: #a78bfa
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: .82rem;
+      color: #b3d4ff
+    }
+
+    .score-live {
+      background: #ffffff10;
+      padding: 4px 12px;
+      border-radius: 12px;
+      border: 1px solid #ffffff20
+    }
+
+    .progress-bar {
+      background: #ffffff15;
+      border-radius: 20px;
+      height: 7px;
+      margin-bottom: 20px;
+      overflow: hidden
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 20px;
+      transition: width .4s
+    }
+
+    .pf-theory {
+      background: linear-gradient(90deg, #326ce5, #00b4ff)
+    }
+
+    .pf-practice {
+      background: linear-gradient(90deg, #00d088, #34d399)
+    }
+
+    .card {
+      background: #ffffff08;
+      border: 1px solid #ffffff18;
+      border-radius: 22px;
+      padding: 28px 30px;
+      backdrop-filter: blur(12px)
+    }
+
+    .badge-th {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-size: .71rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px
+    }
+
+    .bth1 {
+      background: #00b4ff22;
+      color: #00d9ff;
+      border: 1px solid #00b4ff44
+    }
+
+    .bth2 {
+      background: #00d9ff22;
+      color: #00d9ff;
+      border: 1px solid #00d9ff44
+    }
+
+    .bth3 {
+      background: #05966922;
+      color: #34d399;
+      border: 1px solid #05966944
+    }
+
+    .bth4 {
+      background: #7c3aed22;
+      color: #a78bfa;
+      border: 1px solid #7c3aed44
+    }
+
+    .scenario-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-size: .71rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: #00d08822;
+      color: #34d399;
+      border: 1px solid #00d08844;
+      text-transform: uppercase;
+      letter-spacing: 1px
+    }
+
+    .scenario-box {
+      background: #ffffff06;
+      border: 1px solid #00d08833;
+      border-radius: 12px;
+      padding: 13px 17px;
+      margin-bottom: 16px;
+      font-size: .89rem;
+      line-height: 1.6;
+      color: #34d399cc;
+      border-left: 3px solid #00d088
+    }
+
+    .q-text {
+      font-size: 1.06rem;
+      line-height: 1.65;
+      font-weight: 500;
+      margin-bottom: 20px
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .opt {
+      background: #ffffff0a;
+      border: 1.5px solid #ffffff18;
+      border-radius: 13px;
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: .2s;
+      font-size: .92rem;
+      text-align: left;
+      color: #e0e8ff
+    }
+
+    .opt:hover:not(.disabled) {
+      background: #ffffff18;
+      border-color: #326ce5;
+      transform: translateX(5px)
+    }
+
+    .opt.correct {
+      background: #00d08833;
+      border-color: #00d088;
+      color: #7fffcc
+    }
+
+    .opt.wrong {
+      background: #ff303033;
+      border-color: #ff3030;
+      color: #ffaaaa
+    }
+
+    .opt.disabled {
+      cursor: default
+    }
+
+    .feedback {
+      margin-top: 16px;
+      padding: 14px 18px;
+      border-radius: 13px;
+      font-size: .87rem;
+      line-height: 1.65;
+      display: none
+    }
+
+    .feedback.show {
+      display: block
+    }
+
+    .feedback.correct {
+      background: #00d08820;
+      border: 1px solid #00d088
+    }
+
+    .feedback.wrong {
+      background: #ff303020;
+      border: 1px solid #ff3030
+    }
+
+    .btn-next {
+      margin-top: 16px;
+      padding: 13px;
+      border: none;
+      border-radius: 13px;
+      cursor: pointer;
+      font-size: .96rem;
+      font-weight: 700;
+      width: 100%;
+      color: #fff;
+      transition: .2s;
+      display: none
+    }
+
+    .btn-next.theory {
+      background: linear-gradient(90deg, #326ce5, #00b4ff)
+    }
+
+    .btn-next.practice {
+      background: linear-gradient(90deg, #00d088, #34d399);
+      color: #1a1a2e
+    }
+
+    .btn-next:hover {
+      opacity: .88;
+      transform: scale(1.01)
+    }
+
+    .score-card {
+      text-align: center;
+      padding: 36px 20px
+    }
+
+    .score-big {
+      font-size: 5rem;
+      font-weight: 800;
+      line-height: 1;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .sb-t {
+      background: linear-gradient(90deg, #326ce5, #00b4ff)
+    }
+
+    .sb-p {
+      background: linear-gradient(90deg, #00d088, #34d399)
+    }
+
+    .score-sub {
+      color: #b3d4ff;
+      margin: 8px 0 22px;
+      font-size: .94rem
+    }
+
+    .breakdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 26px
+    }
+
+    .bk-item {
+      background: #ffffff08;
+      border: 1px solid #ffffff18;
+      border-radius: 12px;
+      padding: 12px 4px;
+      font-size: .76rem;
+      text-align: center
+    }
+
+    .bk-num {
+      font-size: 1.35rem;
+      font-weight: 700;
+      display: block
+    }
+
+    .c1 {
+      color: #00b4ff
+    }
+
+    .c2 {
+      color: #00d9ff
+    }
+
+    .c3 {
+      color: #34d399
+    }
+
+    .c4 {
+      color: #a78bfa
+    }
+
+    .bdg {
+      display: inline-block;
+      padding: 7px 20px;
+      border-radius: 20px;
+      font-size: .87rem;
+      margin-bottom: 20px;
+      font-weight: 700
+    }
+
+    .bdg-gold {
+      background: linear-gradient(90deg, #f7971e, #ffd200);
+      color: #1a1a2e
+    }
+
+    .bdg-silver {
+      background: #9ca3af;
+      color: #1a1a2e
+    }
+
+    .bdg-bronze {
+      background: #b45309;
+      color: #fff
+    }
+
+    .score-msg {
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+      color: #c0d0f0
+    }
+
+    .btn-retry {
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      font-size: .97rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: transparent;
+      transition: .2s;
+      margin-bottom: 10px
+    }
+
+    .btn-retry.theory {
+      border: 2px solid #326ce5;
+      color: #326ce5
+    }
+
+    .btn-retry.practice {
+      border: 2px solid #00d088;
+      color: #00d088
+    }
+
+    .btn-retry.theory:hover {
+      background: #326ce5;
+      color: #fff
+    }
+
+    .btn-retry.practice:hover {
+      background: #00d088;
+      color: #1a1a2e
+    }
+
+    .btn-switch {
+      width: 100%;
+      padding: 12px;
+      border-radius: 14px;
+      font-size: .93rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      border: 1px solid #ffffff25;
+      color: #b3d4ff;
+      transition: .2s
+    }
+
+    .btn-switch:hover {
+      border-color: #ffffff50;
+      color: #fff
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>⛴️ K8s in Practice Quiz</h1>
+    <p class="subtitle">Kiểm tra kiến thức Cốt lõi và Vận hành K8s | xBrain</p>
+    <div class="tab-nav">
+      <button class="tab-btn t-theory active" id="tab-theory" onclick="switchTab('theory')">📚 Lý Thuyết (...)</button>
+      <button class="tab-btn t-practice" id="tab-practice" onclick="switchTab('practice')">🛠️ Thực Tế (...)</button>
+    </div>
+    <div class="tag-row" id="tag-row">
+      <span class="tag tg1">Kiến Trúc</span>
+      <span class="tag tg2">Tài Nguyên</span>
+      <span class="tag tg3">Vận Hành</span>
+      <span class="tag tg4">Lệnh CLI</span>
+    </div>
+    <div id="app"></div>
+  </div>
+  <script>
+    let activeTab = 'theory', cur = 0, score = 0, answered = false, shuffled = [];
+    let cat = { 1: { c: 0, t: 0 }, 2: { c: 0, t: 0 }, 3: { c: 0, t: 0 }, 4: { c: 0, t: 0 } };
+    const catL = { 1: 'Kiến Trúc', 2: 'Tài Nguyên', 3: 'Vận Hành', 4: 'Lệnh CLI' };
+    const catCls = { 1: 'bth1', 2: 'bth2', 3: 'bth3', 4: 'bth4' };
+    const catC = { 1: 'c1', 2: 'c2', 3: 'c3', 4: 'c4' };
+
+    const Q = [
+      { c: 1, q: "Kubernetes (K8s) sinh ra chủ yếu để giải quyết vấn đề gì?", opts: ["Chạy code Python nhanh hơn", "Quản lý tự động hàng ngàn Container, tự phục hồi khi lỗi, cân bằng tải và tự động mở rộng", "Tạo ra các máy ảo (Virtual Machine) thay thế VMWare", "Lưu trữ dữ liệu thay cho Database"], ans: 1, exp: "K8s được ví như 'hệ điều hành' cho cụm máy chủ, giúp tự động hóa hoàn toàn việc quản lý Container ở quy mô lớn." },
+      { c: 1, q: "Sơ đồ luồng đi tiêu chuẩn của một Request từ người dùng vào đến ứng dụng trong K8s là gì?", opts: ["Ingress -> Deployment -> Service -> Pod -> Container", "Service -> Ingress -> Pod -> Container -> Deployment", "Ingress -> Service -> Deployment -> Pod -> Container", "Deployment -> Ingress -> Service -> Container -> Pod"], ans: 2, exp: "Người dùng gọi vào Ingress, Ingress điều hướng đến Service, Service cân bằng tải vào các Pod do Deployment quản lý." },
+      { c: 2, q: "K8s quản lý đơn vị nhỏ nhất là gì?", opts: ["Container", "Pod", "Node", "Service"], ans: 1, exp: "Pod là đơn vị nhỏ nhất trong K8s. Pod giống như 'ngôi nhà', còn Container là 'người sống trong nhà'. K8s không quản lý Container trực tiếp." },
+      { c: 2, q: "Trong K8s, thành phần nào đóng vai trò như 'Người quản lý quán cà phê', luôn đảm bảo số lượng nhân viên (Pod) luôn đúng với yêu cầu?", opts: ["Service", "Ingress", "Deployment", "ConfigMap"], ans: 2, exp: "Deployment tự động tạo mới Pod nếu có Pod bị chết, đảm bảo số lượng replicas luôn đúng theo cấu hình (Self-healing)." },
+      { c: 2, q: "Pod sinh ra và chết đi liên tục khiến IP thay đổi. Để ứng dụng Frontend gọi Backend ổn định, ta cần dùng thành phần nào đóng vai trò 'Tổng đài nội bộ'?", opts: ["Secret", "Persistent Volume", "Service", "DaemonSet"], ans: 2, exp: "Service cung cấp một IP và tên miền nội bộ cố định, đồng thời cân bằng tải traffic vào các Pod phía sau." },
+      { c: 2, q: "Thành phần nào làm nhiệm vụ điều hướng traffic từ Internet (bên ngoài) vào các Service bên trong dựa trên Tên miền (Domain) hoặc Đường dẫn (Path)?", opts: ["Ingress", "HPA", "Deployment", "PVC"], ans: 0, exp: "Ingress hoạt động ở Layer 7, đóng vai trò như 'Lễ tân toà nhà', phân luồng khách dựa vào URL (như /api, /web)." },
+      { c: 2, q: "Sự khác biệt chính giữa ConfigMap và Secret là gì?", opts: ["ConfigMap dùng cho Window, Secret dùng cho Linux", "ConfigMap lưu dữ liệu cấu hình thông thường (plaintext), Secret chuyên dùng lưu thông tin nhạy cảm (mật khẩu, token) có mã hóa", "Secret lưu ở ổ cứng, ConfigMap lưu trên RAM", "Không có khác biệt"], ans: 1, exp: "Cả 2 đều để bóc tách cấu hình ra khỏi code, nhưng Secret dùng cơ chế mã hóa (base64) để ẩn thông tin nhạy cảm." },
+      { c: 2, q: "Trong K8s, 'Đơn xin cấp ổ cứng' do ứng dụng viết ra được gọi là gì?", opts: ["Persistent Volume (PV)", "StorageClass", "Persistent Volume Claim (PVC)", "Volume"], ans: 2, exp: "PVC (Claim) là phiếu yêu cầu lưu trữ. K8s sẽ tự lấy phiếu này đi tìm kho chứa (PV - Persistent Volume) vật lý phù hợp để gắn vào Pod." },
+      { c: 2, q: "Tính năng HPA (Horizontal Pod Autoscaler) thực hiện nhiệm vụ gì?", opts: ["Tự động tăng dung lượng ổ cứng", "Tự động tăng/giảm số lượng máy chủ (Node)", "Tự động tăng/giảm số lượng Pod dựa trên tải CPU/RAM", "Tự động khởi động lại K8s khi lỗi"], ans: 2, exp: "HPA giải quyết bài toán đông khách đột xuất (như Flash Sale) bằng cách tự động scale số lượng Pod để giảm tải." },
+      { c: 2, q: "Controller nào đảm bảo rằng MỖI Node (máy chủ) trong cụm K8s đều phải chạy đúng 1 Pod duy nhất (thường dùng cài đặt Fluent Bit thu thập log)?", opts: ["StatefulSet", "Deployment", "ReplicaSet", "DaemonSet"], ans: 3, exp: "DaemonSet đảm bảo mọi máy chủ (Node) đều chạy một bản sao của Pod. Rất thích hợp cho các tool monitoring, log, proxy." },
+      { c: 2, q: "Để chạy Database (VD: MySQL) cần ổ cứng cố định và tên gọi không đổi (VD: mysql-0), ta PHẢI dùng Controller nào?", opts: ["StatefulSet", "Deployment", "DaemonSet", "Pod độc lập"], ans: 0, exp: "StatefulSet sinh ra chuyên trị các ứng dụng có trạng thái (Stateful) như Database, đảm bảo định danh và dữ liệu không bị mất khi Pod khởi động lại." },
+      { c: 3, q: "Chế độ Service nào mở một cổng (Ví dụ: 30000) trên MỌI máy chủ EC2 để người bên ngoài Internet có thể truy cập thẳng vào?", opts: ["ClusterIP", "NodePort", "LoadBalancer", "ExternalName"], ans: 1, exp: "NodePort sẽ mở một cổng dải cao (từ 30000-32767) trên tất cả các Node (máy ảo) để nhận traffic từ ngoài đẩy vào Service." },
+      { c: 3, q: "Chế độ Service mặc định của K8s, chỉ cho phép các Pod bên TRONG cụm gọi nhau và hoàn toàn TỪ CHỐI truy cập từ bên ngoài là gì?", opts: ["NodePort", "LoadBalancer", "ClusterIP", "Ingress"], ans: 2, exp: "ClusterIP hoàn toàn cô lập Service khỏi thế giới bên ngoài Internet, chỉ dùng để giao tiếp nội bộ K8s." },
+      { c: 3, q: "K8s có 2 loại kiểm tra sức khoẻ (Probe). Loại nào quyết định việc 'Nếu ứng dụng đang bị treo, K8s sẽ thẳng tay RESTART lại Pod'?", opts: ["readinessProbe", "livenessProbe", "startupProbe", "networkProbe"], ans: 1, exp: "`livenessProbe` giống như hỏi 'Còn sống không?'. Nếu trả lời là Không (hoặc timeout), K8s sẽ giết và khởi động lại Pod đó." },
+      { c: 3, q: "Trong khai báo tài nguyên (Resources) cho Pod, `requests` và `limits` khác nhau thế nào?", opts: ["Requests là RAM, Limits là CPU", "Requests là tối đa, Limits là tối thiểu", "Requests là tài nguyên tối thiểu K8s phải giữ chỗ, Limits là trần tối đa không được phép vượt qua", "Không có khác biệt"], ans: 2, exp: "Requests để K8s xếp chỗ (Scheduling), Limits để K8s trừng phạt. Nếu Pod dùng lố giới hạn RAM của Limits, nó sẽ bị K8s bắn bỏ lập tức (OOMKilled)." },
+      { c: 3, q: "Khi cập nhật phiên bản ứng dụng (vd: từ v1 lên v2), cơ chế mặc định nào giúp K8s không gây ra Downtime (chết app)?", opts: ["Recreate", "Blue/Green Deployment", "Canary", "Rolling Update"], ans: 3, exp: "Rolling Update sẽ khởi động Pod mới từ từ, đợi nó báo 'Ready' rồi mới dần dần tắt các Pod cũ đi, đảm bảo luôn có app phục vụ khách." },
+      { c: 4, q: "Lệnh CLI nào dùng để theo dõi quá trình tạo Pod một cách liên tục (live stream) trên màn hình terminal?", opts: ["kubectl get pods -w", "kubectl watch pods", "kubectl show pods", "kubectl describe pods"], ans: 0, exp: "Cờ `-w` (hoặc `--watch`) giúp lệnh `kubectl get` tự động cập nhật sự thay đổi trạng thái của Pod mà không cần gõ lại liên tục." },
+      { c: 4, q: "Lệnh nào dùng để triển khai nhanh một Deployment tên 'web' bằng image Nginx với 3 bản sao?", opts: ["kubectl run web --image=nginx:1.27 --replicas=3", "kubectl create deployment web --image=nginx:1.27 --replicas=3", "kubectl deploy web nginx:1.27 3", "kubectl apply nginx:1.27"], ans: 1, exp: "Đây là lệnh khởi tạo nhanh Deployment từ CLI. Cấu trúc chuẩn là `kubectl create deployment <tên> --image=<image> --replicas=<số lượng>`." }
+    ];
+
+    const QP = [
+      { sc: "App Backend khởi động rất chậm (mất 2 phút mới load xong vào RAM). Trong 2 phút đó, nếu K8s đẩy request vào thì app sẽ trả về lỗi 502.", q: "Làm sao để giải quyết triệt để lỗi 502 này?", opts: ["Tăng CPU limits lên gấp đôi", "Cấu hình `livenessProbe` với độ trễ 2 phút", "Cấu hình `readinessProbe` kiểm tra endpoint của app, K8s sẽ chỉ đẩy traffic khi Probe này trả về thành công", "Sử dụng HPA để scale thêm Pod"], ans: 2, exp: "`readinessProbe` dùng để trả lời 'Sẵn sàng nhận khách chưa?'. K8s sẽ ngâm traffic ở ngoài cho tới khi Probe này pass." },
+      { sc: "Bạn chạy `kubectl get pods` và thấy một Pod cứ bị khởi động lại liên tục (trạng thái CrashLoopBackOff).", q: "Lệnh nào là cách tốt nhất để bạn điều tra nguyên nhân sâu xa (do thiếu RAM, sai config hay lỗi Image)?", opts: ["kubectl delete pod <tên-pod>", "kubectl describe pod <tên-pod>", "kubectl get events", "kubectl scale pod --replicas=0"], ans: 1, exp: "`kubectl describe pod` sẽ hiển thị toàn bộ vòng đời (Events) của Pod đó, rất dễ phát hiện lỗi như OOMKilled hay ImagePullBackOff." },
+      { sc: "Bạn vừa cập nhật image mới cho Nginx lên bản 1.28. Nhưng bản 1.28 có lỗi nghiêm trọng khiến app chết ngắc.", q: "Lệnh nào giúp bạn 'quay xe' (Rollback) lùi về phiên bản trước đó ngay lập tức?", opts: ["kubectl delete deployment web", "kubectl apply -f nginx-v1.27.yaml", "kubectl rollout undo deploy/web", "kubectl set image deploy/web web=nginx:1.27"], ans: 2, exp: "`rollout undo` là nút 'Ctrl+Z' cứu mạng trong K8s. Nó ngay lập tức phục hồi lại ReplicaSet của phiên bản trước đó nhanh chóng." },
+      { sc: "Sếp yêu cầu mở một cổng ra ngoài để team truy cập thử nghiệm Pod Web mà không cần cài Ingress hay ALB phức tạp.", q: "Bạn dùng lệnh kubectl nào để test nhanh trên máy?", opts: ["kubectl expose deployment web --type=NodePort --port=80", "kubectl port-forward svc/web 8080:80", "Cả 2 cách trên đều được", "Chỉ có thể dùng Ingress"], ans: 2, exp: "Cách 1 mở cổng NodePort ra thẳng IP máy ảo. Cách 2 (`port-forward`) tạo một tunnel trực tiếp từ localhost vào Service. Cả 2 đều dùng tốt cho test." },
+      { sc: "Traffic đổ vào hệ thống tăng gấp 3 lần bình thường (Đang có Flash Sale). Hệ thống bắt đầu chậm dần.", q: "Lệnh thao tác nhanh (CLI) nào để ép tăng số lượng Pod của Deployment 'web' lên 10 ngay lập tức?", opts: ["kubectl scale deploy/web --replicas=10", "kubectl add pod web 10", "kubectl up deploy/web 10", "kubectl edit deploy/web"], ans: 0, exp: "Lệnh `kubectl scale` là cách phản ứng tức thời nhất trên terminal để thay đổi số lượng replicas mà không cần sửa YAML file." },
+      { sc: "Bạn vừa lỡ tay gõ `kubectl delete pod <tên-pod>` để xóa đi một Pod đang phục vụ Web của một Deployment.", q: "Chuyện gì sẽ xảy ra tiếp theo với trang Web đó?", opts: ["Trang Web chết hoàn toàn, phải chờ bạn tạo lại", "Kubernetes báo lỗi vì bạn không có quyền xóa", "K8s ngay lập tức tự động sinh ra một Pod mới để bù vào số lượng đã bị xóa (Self-healing)", "Pod đó sẽ bị treo ở trạng thái Terminating mãi mãi"], ans: 2, exp: "Đây chính là sức mạnh cốt lõi của K8s. Deployment luôn theo dõi và đảm bảo số lượng Pod sống sót phải bằng đúng số lượng Replicas yêu cầu." },
+      { sc: "Lập trình viên gõ cứng chuỗi URL kết nối DB vào code: `dbUrl = \"mysql://admin:123456@10.0.0.5/shop\"`.", q: "Theo chuẩn K8s (Best Practice), bạn phải làm gì để bảo mật thông tin này?", opts: ["Mã hóa đoạn code đó bằng Base64", "Giấu code vào thư mục ẩn", "Chuyển URL sang ConfigMap, và tách Password '123456' sang Secret, sau đó truyền vào Container qua Biến môi trường", "Chuyển URL vào Persistent Volume"], ans: 2, exp: "Bóc tách cấu hình ra khỏi code là bắt buộc. ConfigMap cho URL, Secret cho mật khẩu là chuẩn mực an toàn cao nhất trong K8s." }
+    ];
+
+    function shuffle(a) { return [...a].sort(() => Math.random() - .5) }
+    function switchTab(tab) {
+      activeTab = tab;
+      document.getElementById('tab-theory').classList.toggle('active', tab === 'theory');
+      document.getElementById('tab-practice').classList.toggle('active', tab === 'practice');
+      document.getElementById('tag-row').style.display = tab === 'theory' ? 'flex' : 'none';
+      tab === 'theory' ? startTheory() : startPractice();
+    }
+    function startTheory() { cur = 0; score = 0; answered = false; cat = { 1: { c: 0, t: 0 }, 2: { c: 0, t: 0 }, 3: { c: 0, t: 0 }, 4: { c: 0, t: 0 } }; shuffled = shuffle(Q); renderQ() }
+    function startPractice() { cur = 0; score = 0; answered = false; cat = { 1: { c: 0, t: 0 }, 2: { c: 0, t: 0 }, 3: { c: 0, t: 0 }, 4: { c: 0, t: 0 } }; shuffled = shuffle(QP); renderQ() }
+    function renderQ() {
+      const app = document.getElementById('app');
+      const q = shuffled[cur];
+      const isPrac = activeTab === 'practice';
+      const pct = Math.round(cur / shuffled.length * 100);
+      const badge = isPrac ? `<div class="scenario-badge">🛠️ Scenario · Thực Tế</div>` : `<div class="badge-th ${catCls[q.c]}">${catL[q.c]}</div>`;
+      const sc = isPrac && q.sc ? `<div class="scenario-box">📋 <strong>Tình huống:</strong> ${q.sc}</div>` : '';
+      app.innerHTML = `
+  <div class="top-bar"><span>Câu ${cur + 1}/${shuffled.length}</span><span class="score-live">✅ ${score} đúng</span></div>
+  <div class="progress-bar"><div class="progress-fill ${isPrac ? 'pf-practice' : 'pf-theory'}" style="width:${pct}%"></div></div>
+  <div class="card">${badge}${sc}
+    <div class="q-text">${q.q}</div>
+    <div class="options" id="opts">${q.opts.map((o, i) => `<button class="opt" id="o${i}" onclick="pick(${i})">${String.fromCharCode(65 + i)}. ${o}</button>`).join('')}</div>
+    <div class="feedback" id="fb"></div>
+    <button class="btn-next ${isPrac ? 'practice' : 'theory'}" id="nxt" onclick="next()">${cur === shuffled.length - 1 ? '🏁 Xem Kết Quả' : 'Câu tiếp →'}</button>
+  </div>`;
+    }
+    function pick(i) {
+      if (answered) return; answered = true;
+      const q = shuffled[cur];
+      const opts = document.querySelectorAll('.opt');
+      opts.forEach(o => o.classList.add('disabled'));
+      const isPrac = activeTab === 'practice';
+      if (!isPrac && q.c) cat[q.c].t++;
+      const fb = document.getElementById('fb');
+      if (i === q.ans) { score++; if (!isPrac && q.c) cat[q.c].c++; opts[i].classList.add('correct'); fb.className = 'feedback correct show'; fb.innerHTML = `<strong>✅ Chính xác!</strong><br><br>${q.exp}`; }
+      else { opts[i].classList.add('wrong'); opts[q.ans].classList.add('correct'); fb.className = 'feedback wrong show'; fb.innerHTML = `<strong>❌ Chưa đúng.</strong> Đáp án: <strong>${String.fromCharCode(65 + q.ans)}. ${q.opts[q.ans]}</strong><br><br>${q.exp}`; }
+      document.getElementById('nxt').style.display = 'block';
+    }
+
+    function next() { answered = false; cur++; if (cur >= shuffled.length) { showResult(); return; } renderQ() }
+    function showResult() {
+      const ip = activeTab === 'practice';
+      const pct = Math.round(score / shuffled.length * 100);
+      let bdg = '', msg = '';
+      if (pct >= 90) { bdg = '<span class="bdg bdg-gold">🏆 K8s Master</span>'; msg = ip ? 'Kỹ năng vận hành K8s của bạn quá tuyệt vời! Rất sẵn sàng cho Production! 🚀' : 'Bạn đã nắm cực vững kiến trúc K8s!'; }
+      else if (pct >= 70) { bdg = '<span class="bdg bdg-silver">🥈 K8s Engineer</span>'; msg = 'Gần vươn tới mức Master rồi! Xem lại vài kiến thức còn hổng nhé.'; }
+      else { bdg = '<span class="bdg bdg-bronze">💪 Cần Luyện Thêm</span>'; msg = 'Đọc lại bài giảng K8s In Practice để củng cố các luồng Request nhé!'; }
+      const bkHTML = ip ? '' : `<div class="breakdown">${[1, 2, 3, 4].map(k => { const s = cat[k]; const p = s.t > 0 ? Math.round(s.c / s.t * 100) : '-'; return `<div class="bk-item"><span class="bk-num ${catC[k]}">${p}${s.t > 0 ? '%' : ''}</span>${catL[k]}<br><small>${s.c}/${s.t}</small></div>` }).join('')}</div>`;
+      document.getElementById('app').innerHTML = `
+  <div class="card score-card">
+    <div class="score-big ${ip ? 'sb-p' : 'sb-t'}">${pct}%</div>
+    <div class="score-sub">${score} / ${shuffled.length} câu đúng</div>
+    ${bdg}<div class="score-msg">${msg}</div>
+    ${bkHTML}
+    <button class="btn-retry ${ip ? 'practice' : 'theory'}" onclick="${ip ? 'startPractice()' : 'startTheory()'}">🔄 Làm Lại</button>
+    <button class="btn-switch" onclick="switchTab('${ip ? 'theory' : 'practice'}')">
+      ${ip ? '📚 Chuyển sang Lý Thuyết' : '🛠️ Thử Bài Thực Tế'}
+    </button>
+  </div>`;
+    }
+    
+    // Set dynamic lengths on buttons before start
+    document.getElementById('tab-theory').innerHTML = `📚 Lý Thuyết (${Q.length} câu)`;
+    document.getElementById('tab-practice').innerHTML = `🛠️ Thực Tế (${QP.length} câu)`;
+    startTheory();
+  </script>
+</body>
+
+</html>
